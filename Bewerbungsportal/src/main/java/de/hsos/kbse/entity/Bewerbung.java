@@ -28,7 +28,7 @@ public class Bewerbung extends AbstractEntity {
 
     //______________Bewerber__________________
     //HasSet für Bewerber
-    @OneToMany(
+   /** @OneToMany(
             mappedBy = "bewerbung",
             cascade = CascadeType.ALL,
             orphanRemoval = true

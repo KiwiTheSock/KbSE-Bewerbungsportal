@@ -19,7 +19,7 @@ import javax.persistence.Table;
 //NamedQueries ergänzen!
 public class Bewerber extends AbstractEntity {
 
-    Benutzer bewerber;
+    //Benutzer bewerber;
     
     //Bemerkung Nachschlagen: Persistierung von Datein in Java
     String unterlagen_pfad;

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name="Personal")
 public class Personal extends AbstractEntity {
 
-    Benutzer personal;
+    //Benutzer personal;
     
     //Zusätzliche Attribute
     String durchwahl;
