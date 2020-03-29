@@ -49,10 +49,7 @@ public abstract class AbstractEntity implements Serializable {
             return false;
         }
         final AbstractEntity other = (AbstractEntity) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
