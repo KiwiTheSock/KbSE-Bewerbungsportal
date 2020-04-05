@@ -8,6 +8,7 @@ package de.hsos.kbse.entity;
 import de.hsos.kbse.interfaces.AbstractEntity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -15,6 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Personal")
+@XmlRootElement
 public class Personal extends AbstractEntity {
 
     //Benutzer personal;

@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "bewerbung")
 //@NamedQueries ergänzen!
+@XmlRootElement
 public class Bewerbung extends AbstractEntity {
 
     Date zeitstempel;

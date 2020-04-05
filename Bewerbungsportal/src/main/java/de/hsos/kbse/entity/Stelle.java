@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -17,6 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Stelle")
+@XmlRootElement
 public class Stelle extends AbstractEntity {
     
     String bezeichnung;
