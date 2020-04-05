@@ -6,9 +6,13 @@
 package de.hsos.kbse.entity;
 
 import de.hsos.kbse.interfaces.AbstractEntity;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -26,6 +30,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Transactional(Transactional.TxType.MANDATORY) //Erklärung nötig
 public class Benutzer extends AbstractEntity {
+
+    @OneToOne
+    private Bewerber bewerber;
+
+    @OneToMany(mappedBy = "bewerber")
+    private List<Bewerber> bewerbers;
     
     @Column(name="name")
     @NotNull()
@@ -61,6 +71,10 @@ public class Benutzer extends AbstractEntity {
     @NotNull()
     @Valid
     private Integer plz;
+    
+    /*@Embedded
+    @Valid
+    private Login login = new Login();*/
 
     public String getName() {
         return name;

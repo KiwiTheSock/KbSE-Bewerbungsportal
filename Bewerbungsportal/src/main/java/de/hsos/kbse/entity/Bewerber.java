@@ -7,8 +7,14 @@ package de.hsos.kbse.entity;
 
 import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -19,11 +25,22 @@ import javax.persistence.Table;
 //NamedQueries ergänzen!
 public class Bewerber extends AbstractEntity {
 
-    //Benutzer bewerber;
-    
+   
     //Bemerkung Nachschlagen: Persistierung von Datein in Java
+    @Column(name = "anlagen_pfad")
+    @NotNull
+    @Valid
     String unterlagen_pfad;
+    @Column(name = "portait_pfad")
+    @NotNull
+    @Valid
     String portait_pfad;
+
+    //Überprüfen ob richtig 
+    @OneToOne(mappedBy = "bewerber")
+    Benutzer bewerber = new Benutzer();
+    
+    public Bewerber() {}
 
     public String getUnterlagen_pfad() {
         return unterlagen_pfad;

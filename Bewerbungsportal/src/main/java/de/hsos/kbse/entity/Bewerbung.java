@@ -8,11 +8,18 @@ package de.hsos.kbse.entity;
 import de.hsos.kbse.interfaces.AbstractEntity;
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -23,43 +30,48 @@ import javax.persistence.Table;
 //@NamedQueries ergänzen!
 public class Bewerbung extends AbstractEntity {
 
+    @Column(name = "zeitstempel")
+    @Temporal(TemporalType.DATE)
+    @Valid
     Date zeitstempel;
+
+    @Column(name = "status")
+    @NotNull
+    @Valid
     String status;
 
+    public Bewerbung () {}
+    
     //______________Bewerber__________________
     //HasSet für Bewerber
-   /** @OneToMany(
-            mappedBy = "bewerbung",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+    /*    @OneToMany(
+    mappedBy = "bewerbung",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true
     )
-    private Set<Bewerber> bewerber = new HashSet<>();
+    private final Set<Bewerber> bewerber = new HashSet<>();*/
 
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "bewerbung_id")
+    @NotNull()
+    @Valid
+    private List<Bewerber> bewerber;
     //bewerber_hinzufuegen
     //bewerber_entfernen
-    
-    //______________Personal__________________
-    //HashSet für Personal
-    @OneToMany(
-            mappedBy = "bewerbung",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private Set<Personal> personal = new HashSet<>();
 
-    //personal_hinzufuegen
-    //personal_entfernen
-    
-    //_____________Stelle__________________
-    //HashSet für Stellen
-    @OneToMany(
-            mappedBy = "bewerbung",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private Set<Stelle> stelle = new HashSet<>();
-    
-     /**
+    /**
+     * //______________Personal__________________ //HashSet für Personal
+     *
+     * @OneToMany( mappedBy = "bewerbung", cascade = CascadeType.ALL,
+     * orphanRemoval = true ) private Set<Personal> personal = new HashSet<>();
+     *
+     * //personal_hinzufuegen //personal_entfernen
+     *
+     * //_____________Stelle__________________ //HashSet für Stellen
+     * @OneToMany( mappedBy = "bewerbung", cascade = CascadeType.ALL,
+     * orphanRemoval = true ) private Set<Stelle> stelle = new HashSet<>();
+     *
+     * /**
      * OneToMany Example
      *
      * @OneToMany( mappedBy = "department", cascade = CascadeType.ALL,
@@ -69,7 +81,8 @@ public class Bewerbung extends AbstractEntity {
      *
      * public void removeExam(Exam exam) { exams.remove(exam);
      * exam.setDatum(null); }
-    *
+     *
      */
     
+
 }
