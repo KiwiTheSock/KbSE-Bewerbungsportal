@@ -7,25 +7,60 @@ package de.hsos.kbse.entity;
 
 import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author pmarkman
  */
 @Entity
+//@Vetoed Erklärung nötig
 @Table(name="Benutzer")
 //@NamedQueries ergänzen!
+@XmlRootElement
+@Transactional(Transactional.TxType.MANDATORY) //Erklärung nötig
 public class Benutzer extends AbstractEntity {
     
-    String name;
-    String vorname;
-    String email;
-    String telefon;
-    String straße;
-    String ort;
-    Integer plz;
+    @Column(name="name")
+    @NotNull()
+    @Valid // Gute Erklärung nötig
+    private String name;
+    
+    @Column(name="vorname")
+    @NotNull()
+    @Valid
+    private String vorname;
+    
+    @Column(name="email")
+    @NotNull()
+    @Valid
+    private String email;
+    
+    @Column(name="telefon")
+    @NotNull()
+    @Valid
+    private String telefon;
+    
+    @Column(name="straße")
+    @NotNull()
+    @Valid
+    private String straße;
+    
+    @Column(name="ort")
+    @NotNull()
+    @Valid
+    private String ort;
+    
+    @Column(name="plz")
+    @NotNull()
+    @Valid
+    private Integer plz;
 
     public String getName() {
         return name;
