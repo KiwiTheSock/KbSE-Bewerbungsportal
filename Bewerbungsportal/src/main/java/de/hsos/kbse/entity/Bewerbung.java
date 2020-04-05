@@ -40,17 +40,7 @@ public class Bewerbung extends AbstractEntity {
     @Valid
     String status;
 
-    public Bewerbung () {}
-    
     //______________Bewerber__________________
-    //HasSet für Bewerber
-    /*    @OneToMany(
-    mappedBy = "bewerbung",
-    cascade = CascadeType.ALL,
-    orphanRemoval = true
-    )
-    private final Set<Bewerber> bewerber = new HashSet<>();*/
-
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "bewerbung_id")
     @NotNull()
@@ -84,5 +74,8 @@ public class Bewerbung extends AbstractEntity {
      *
      */
     
+    
+    public Bewerbung() {
+    }
 
 }

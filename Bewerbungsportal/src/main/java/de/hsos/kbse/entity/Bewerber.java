@@ -9,10 +9,9 @@ import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -21,11 +20,12 @@ import javax.validation.constraints.NotNull;
  * @author pmarkman
  */
 @Entity
-@Table(name="Bewerber")
+//@Vetoed Erklärung nötig
+@Table(name = "Bewerber")
 //NamedQueries ergänzen!
+@Transactional(Transactional.TxType.MANDATORY) // Überprüfen!
 public class Bewerber extends AbstractEntity {
 
-   
     //Bemerkung Nachschlagen: Persistierung von Datein in Java
     @Column(name = "anlagen_pfad")
     @NotNull
@@ -39,8 +39,9 @@ public class Bewerber extends AbstractEntity {
     //Überprüfen ob richtig 
     @OneToOne(mappedBy = "bewerber")
     Benutzer bewerber = new Benutzer();
-    
-    public Bewerber() {}
+
+    public Bewerber() {
+    }
 
     public String getUnterlagen_pfad() {
         return unterlagen_pfad;
@@ -91,5 +92,5 @@ public class Bewerber extends AbstractEntity {
     public String toString() {
         return "Bewerber{" + "unterlagen_pfad=" + unterlagen_pfad + ", portait_pfad=" + portait_pfad + '}';
     }
-    
+
 }
