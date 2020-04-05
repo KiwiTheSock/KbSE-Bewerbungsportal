@@ -8,20 +8,44 @@ package de.hsos.kbse.entity;
 import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author pmarkman
  */
 @Entity
-@Table(name="Stelle")
+//@Vetoed 
+@Table(name = "Stelle")
+//@NamedQueries ergänzen
+@Transactional(Transactional.TxType.MANDATORY) // Überprüfen!
 public class Stelle extends AbstractEntity {
-    
+
+    @Column(name = "bezeichnung")
+    @NotNull
+    @Valid
     String bezeichnung;
+
+    @Column(name = "datum")
+    @Temporal(TemporalType.DATE)
+    @Valid
     Date datum;
+
+    @Column(name = "beschreibung")
+    @NotNull
+    @Valid
     String beschreibung;
+
+    @Column(name = "ort")
+    @NotNull
+    @Valid
     String ort;
 
     public Stelle() {
@@ -33,7 +57,7 @@ public class Stelle extends AbstractEntity {
         this.beschreibung = beschreibung;
         this.ort = ort;
     }
-    
+
     public String getBezeichnung() {
         return bezeichnung;
     }
