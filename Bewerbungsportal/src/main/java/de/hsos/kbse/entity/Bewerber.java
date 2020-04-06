@@ -9,7 +9,7 @@ import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  *
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="Bewerber")
 //NamedQueries ergänzen!
-@XmlRootElement
+
 public class Bewerber extends AbstractEntity {
 
     //Benutzer bewerber;

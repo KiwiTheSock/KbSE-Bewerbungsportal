@@ -34,6 +34,8 @@ public class ApplicationConfig extends Application {
         resources.add(de.hsos.kbse.entity.service.BewerbungFacadeREST.class);
         resources.add(de.hsos.kbse.entity.service.PersonalFacadeREST.class);
         resources.add(de.hsos.kbse.entity.service.StelleFacadeREST.class);
+        resources.add(de.hsos.kbse.rest.RestBenutzer.class);
+        resources.add(de.hsos.kbse.rest.RestBewerbung.class);
     }
     
 }

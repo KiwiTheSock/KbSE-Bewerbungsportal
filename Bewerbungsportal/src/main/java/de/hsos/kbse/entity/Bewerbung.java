@@ -7,11 +7,7 @@ package de.hsos.kbse.entity;
 
 import de.hsos.kbse.interfaces.AbstractEntity;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,12 +18,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "bewerbung")
 //@NamedQueries ergänzen!
-@XmlRootElement
+
 public class Bewerbung extends AbstractEntity {
 
     Date zeitstempel;
     String status;
 
+    public Bewerbung(Date zeitstempel, String status) {
+        this.zeitstempel = zeitstempel;
+        this.status = status;
+    }
+
+    public Bewerbung() {
+    }
+
+    
+    
+    
     //______________Bewerber__________________
     //HasSet für Bewerber
    /** @OneToMany(

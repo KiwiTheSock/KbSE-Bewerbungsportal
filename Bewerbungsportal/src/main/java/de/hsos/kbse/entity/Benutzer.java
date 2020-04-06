@@ -9,7 +9,7 @@ import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  *
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="Benutzer")
 //@NamedQueries ergänzen!
-@XmlRootElement
+
 public class Benutzer extends AbstractEntity {
     
     String name;
@@ -29,6 +29,27 @@ public class Benutzer extends AbstractEntity {
     String ort;
     Integer plz;
 
+    public Benutzer(String name, String vorname, String email, String telefon, String straße, String ort, Integer plz) {
+        this.name = name;
+        this.vorname = vorname;
+        this.email = email;
+        this.telefon = telefon;
+        this.straße = straße;
+        this.ort = ort;
+        this.plz = plz;
+    }
+
+    public Benutzer() {
+    }
+
+    public Benutzer(String name, String vorname) {
+        this.name = name;
+        this.vorname = vorname;
+    }
+
+
+    
+    
     public String getName() {
         return name;
     }
