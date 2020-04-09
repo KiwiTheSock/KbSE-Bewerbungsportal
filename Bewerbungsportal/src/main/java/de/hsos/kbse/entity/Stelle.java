@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="Stelle")
 
-public class Stelle extends AbstractEntity {
+public class Stelle extends AbstractEntity  {
     
     String bezeichnung;
     Date datum;

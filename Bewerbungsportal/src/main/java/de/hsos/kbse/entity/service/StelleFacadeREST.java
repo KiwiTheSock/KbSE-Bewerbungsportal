@@ -6,6 +6,8 @@
 package de.hsos.kbse.entity.service;
 
 import de.hsos.kbse.entity.Stelle;
+import de.hsos.kbse.rest.RestStelleInterface;
+import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -87,5 +90,19 @@ public class StelleFacadeREST extends AbstractFacade<Stelle> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
+//    @Override
+//    public Response createStelle(String bezeichnung, Date datum, String beschreibung, String ort) {
+//        try {
+//
+//            Stelle stelle = new Stelle(bezeichnung, datum, beschreibung, ort);
+//            em.persist(stelle);
+//            return Response
+//                    .status(Response.Status.FOUND)
+//                    .build();
+//        } catch (NullPointerException | IllegalArgumentException ex) {
+//            return Response.status(Response.Status.CONFLICT).build();
+//        }
+//    }
+
 }

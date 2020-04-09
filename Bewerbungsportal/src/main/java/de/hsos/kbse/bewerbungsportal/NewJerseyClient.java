@@ -1,0 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package de.hsos.kbse.bewerbungsportal;
+
+/**
+ * Jersey REST client generated for REST resource:RestBenutzer [benutzer]<br>
+ * USAGE:
+ * <pre>
+ *        NewJerseyClient client = new NewJerseyClient();
+ *        Object response = client.XXX(...);
+ *        // do whatever with response
+ *        client.close();
+ * </pre>
+ *
+ * @author nordm
+ */
+public class NewJerseyClient {
+    
+}
