@@ -6,7 +6,6 @@
 package de.hsos.kbse.entity.service;
 
 import de.hsos.kbse.entity.Stelle;
-import de.hsos.kbse.rest.RestStelleInterface;
 import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -20,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -91,18 +91,25 @@ public class StelleFacadeREST extends AbstractFacade<Stelle> {
         return em;
     }
 
-//    @Override
-//    public Response createStelle(String bezeichnung, Date datum, String beschreibung, String ort) {
-//        try {
-//
-//            Stelle stelle = new Stelle(bezeichnung, datum, beschreibung, ort);
-//            em.persist(stelle);
-//            return Response
-//                    .status(Response.Status.FOUND)
-//                    .build();
-//        } catch (NullPointerException | IllegalArgumentException ex) {
-//            return Response.status(Response.Status.CONFLICT).build();
-//        }
-//    }
+    
+      @POST
+    @Path("stelle")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response createStelle(
+            @QueryParam("bezeichnung") String bezeichnung,
+            @QueryParam("datum") Date datum,
+            @QueryParam("beschreibung") String beschreibung,
+            @QueryParam("ort") String ort) {
+        try {
+
+            Stelle stelle = new Stelle(bezeichnung, datum, beschreibung, ort);
+            em.persist(stelle);
+            return Response
+                    .status(Response.Status.FOUND)
+                    .build();
+        } catch (NullPointerException | IllegalArgumentException ex) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }
+    }
 
 }

@@ -6,7 +6,7 @@
 package de.hsos.kbse.entity.service;
 
 import de.hsos.kbse.entity.Benutzer;
-import de.hsos.kbse.rest.RestBenutzerInterface;
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -26,9 +27,9 @@ import javax.ws.rs.core.Response;
  *
  * @author nordm
  */
-@Stateless
+@Stateless //TODO: muss noch entfernt werden 
 @Path("de.hsos.kbse.entity.benutzer")
-public class BenutzerFacadeREST extends AbstractFacade<Benutzer>  {
+public class BenutzerFacadeREST extends AbstractFacade<Benutzer> {
 
     @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -90,6 +91,28 @@ public class BenutzerFacadeREST extends AbstractFacade<Benutzer>  {
         return em;
     }
 
+    
+        @POST
+    @Path("benutzer")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response createBenutzer(
+            @QueryParam("name") String name,
+            @QueryParam("vorname") String vorname,
+            @QueryParam("email") String email,
+            @QueryParam("telefon") String telefon,
+            @QueryParam("ort") String ort,
+            @QueryParam("straße") String straße,
+            @QueryParam("plz") Integer plz) {
+        try {
+            Benutzer benutzer = new Benutzer(name, vorname, email, telefon, ort, straße, plz);
+            em.persist(benutzer);
+            return Response
+                    .status(Response.Status.FOUND)
+                    .build();
+        } catch (NullPointerException | IllegalArgumentException ex) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }
+    }
 //    @Override
 //    public Response createBenutzer(String name, String vorname, String email, String telefon, String ort, String straße, Integer plz) {
 //        try {

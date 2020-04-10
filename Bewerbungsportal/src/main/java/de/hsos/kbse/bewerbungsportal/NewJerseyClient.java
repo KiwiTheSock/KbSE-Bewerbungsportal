@@ -5,6 +5,9 @@
  */
 package de.hsos.kbse.bewerbungsportal;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
+
 /**
  * Jersey REST client generated for REST resource:RestBenutzer [benutzer]<br>
  * USAGE:
@@ -18,5 +21,18 @@ package de.hsos.kbse.bewerbungsportal;
  * @author nordm
  */
 public class NewJerseyClient {
+
+    private WebTarget webTarget;
+    private Client client;
+    private static final String BASE_URI = "http://localhost:8080/Bewerbungsportal/webresources";
+
+    public NewJerseyClient() {
+        client = javax.ws.rs.client.ClientBuilder.newClient();
+        webTarget = client.target(BASE_URI).path("benutzer");
+    }
+
+    public void close() {
+        client.close();
+    }
     
 }
