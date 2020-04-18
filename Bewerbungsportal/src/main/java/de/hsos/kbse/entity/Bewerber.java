@@ -27,6 +27,11 @@ public class Bewerber extends AbstractEntity {
     String unterlagen_pfad;
     String portait_pfad;
 
+    public Bewerber() {
+    }
+
+    
+    
     public String getUnterlagen_pfad() {
         return unterlagen_pfad;
     }
