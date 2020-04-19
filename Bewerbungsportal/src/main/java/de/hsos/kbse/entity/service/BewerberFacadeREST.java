@@ -53,7 +53,7 @@ public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
             @QueryParam("plz") Integer plz,
             @QueryParam("portait_pfad") String portait_pfad){
         try {
-            Bewerber bewerber = new Bewerber(portait_pfad, name, vorname, email, telefon, ort, straße, plz);
+            Bewerber bewerber = new Bewerber( name, vorname, email, telefon, ort, straße, plz,portait_pfad);
             em.persist(bewerber);
             return Response
                     .status(Response.Status.FOUND)

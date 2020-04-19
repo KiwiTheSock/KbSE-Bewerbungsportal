@@ -29,7 +29,7 @@ public class Bewerber extends Benutzer {
 
     //Bemerkung Nachschlagen: Persistierung von Datein in Java
     @Column(name = "anlagen_pfad")
-    @NotNull
+//    @NotNull
     @Valid
     String unterlagen_pfad;
     
@@ -43,7 +43,7 @@ public class Bewerber extends Benutzer {
     private Set<Bewerbung> bewerbung;
 
 
-    public Bewerber(String portait, String name, String vorname, String email, String telefon, String ort, String straße, Integer plz) {
+    public Bewerber( String name, String vorname, String email, String telefon, String ort, String straße, Integer plz, String portait) {
         super(name,vorname,email, telefon, straße, ort, plz);
         this.portait_pfad = portait;
     }
