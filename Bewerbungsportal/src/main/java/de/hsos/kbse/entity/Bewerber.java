@@ -5,11 +5,11 @@
  */
 package de.hsos.kbse.entity;
 
-import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -24,22 +24,31 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Bewerber")
 //NamedQueries ergänzen!
 @Transactional(Transactional.TxType.MANDATORY) // Überprüfen!
-public class Bewerber extends AbstractEntity {
+public class Bewerber extends Benutzer {
 
     //Bemerkung Nachschlagen: Persistierung von Datein in Java
     @Column(name = "anlagen_pfad")
     @NotNull
     @Valid
     String unterlagen_pfad;
+    
     @Column(name = "portait_pfad")
     @NotNull
     @Valid
     String portait_pfad;
 
-    //Überprüfen ob richtig 
-    @OneToOne(mappedBy = "bewerber")
-    Benutzer bewerber = new Benutzer();
+    //Ein Bewerber kann mehrere Bewerbungen haben
+    @OneToMany(mappedBy = "bewerber")
+    private Set<Bewerbung> bewerbung;
 
+    public Set<Bewerbung> getBewerbung() {
+        return bewerbung;
+    }
+
+    public void setBewerbung(Set<Bewerbung> bewerbung) {
+        this.bewerbung = bewerbung;
+    }
+    
     public Bewerber() {
     }
 

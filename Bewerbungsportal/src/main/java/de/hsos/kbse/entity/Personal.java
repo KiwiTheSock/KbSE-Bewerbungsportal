@@ -5,12 +5,13 @@
  */
 package de.hsos.kbse.entity;
 
-import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +21,8 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "Personal")
-public class Personal extends AbstractEntity {
+@Transactional(Transactional.TxType.MANDATORY)
+public class Personal extends Benutzer {
 
     //Zusätzliche Attribute
     @Column(name = "durchwahl")
@@ -32,10 +34,29 @@ public class Personal extends AbstractEntity {
     @NotNull
     @Valid
     String bueroNr;
-
-    @OneToOne(mappedBy = "bewerber")
-    Benutzer bewerber = new Benutzer();
-
+    
+    @OneToMany(mappedBy = "personal")
+    private Set<Bewerbung> bewerbungen;
+    
+    public Set<Bewerbung> getBewerbung() {
+    return bewerbungen;
+    }
+    
+    public void setBewerbung(Set<Bewerbung> bewerbung) {
+    this.bewerbungen = bewerbung;
+    }
+    
+    @OneToMany(mappedBy = "personal")
+    private Set<Stelle> stelle;
+    
+    public Set<Stelle> getStelle() {
+    return stelle;
+    }
+    
+    public void setStelle(Set<Stelle> stelle) {
+    this.stelle = stelle;
+    }
+    
     public Personal() {
     }
 
@@ -60,7 +81,6 @@ public class Personal extends AbstractEntity {
         int hash = 7;
         hash = 17 * hash + Objects.hashCode(this.durchwahl);
         hash = 17 * hash + Objects.hashCode(this.bueroNr);
-        hash = 17 * hash + Objects.hashCode(this.bewerber);
         return hash;
     }
 
@@ -82,15 +102,12 @@ public class Personal extends AbstractEntity {
         if (!Objects.equals(this.bueroNr, other.bueroNr)) {
             return false;
         }
-        if (!Objects.equals(this.bewerber, other.bewerber)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Personal{" + "durchwahl=" + durchwahl + ", bueroNr=" + bueroNr + ", bewerber=" + bewerber + '}';
+        return "Personal{" + "durchwahl=" + durchwahl + ", bueroNr=" + bueroNr +'}';
     }
 
 }

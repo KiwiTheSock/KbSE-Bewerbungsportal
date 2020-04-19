@@ -6,18 +6,16 @@
 package de.hsos.kbse.entity;
 
 import de.hsos.kbse.interfaces.AbstractEntity;
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -31,8 +29,8 @@ import javax.validation.constraints.NotNull;
 public class Bewerbung extends AbstractEntity {
 
     @Column(name = "zeitstempel")
-    @Temporal(TemporalType.DATE)
     @Valid
+    @Temporal(javax.persistence.TemporalType.DATE)
     Date zeitstempel;
 
     @Column(name = "status")
@@ -41,41 +39,92 @@ public class Bewerbung extends AbstractEntity {
     String status;
 
     //______________Bewerber__________________
-    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "bewerbung_id")
-    @NotNull()
-    @Valid
-    private List<Bewerber> bewerber;
-    //bewerber_hinzufuegen
-    //bewerber_entfernen
+    @ManyToOne
+    @JoinColumn(name="bewerber_id", nullable = false)
+    private Bewerber bewerber;
 
-    /**
-     * //______________Personal__________________ //HashSet für Personal
-     *
-     * @OneToMany( mappedBy = "bewerbung", cascade = CascadeType.ALL,
-     * orphanRemoval = true ) private Set<Personal> personal = new HashSet<>();
-     *
-     * //personal_hinzufuegen //personal_entfernen
-     *
-     * //_____________Stelle__________________ //HashSet für Stellen
-     * @OneToMany( mappedBy = "bewerbung", cascade = CascadeType.ALL,
-     * orphanRemoval = true ) private Set<Stelle> stelle = new HashSet<>();
-     *
-     * /**
-     * OneToMany Example
-     *
-     * @OneToMany( mappedBy = "department", cascade = CascadeType.ALL,
-     * orphanRemoval = true ) private Set<Exam> exams = new HashSet<>();
-     *
-     * public void addExam(Exam exam) { exams.add(exam); exam.setDepart(this); }
-     *
-     * public void removeExam(Exam exam) { exams.remove(exam);
-     * exam.setDatum(null); }
-     *
-     */
+    public Bewerber getBewerber() {
+        return bewerber;
+    }
+
+    public void setBewerber(Bewerber bewerber) {
+        this.bewerber = bewerber;
+    }
+
+    //______________Personal__________________
     
+    @ManyToOne
+    @JoinColumn(name = "personal_id", nullable = false)
+    private Personal personal;
     
+    public Personal getPersonal() {
+    return personal;
+    }
+    
+    public void setPersonal(Personal personal) {
+    this.personal = personal;
+    }
+    
+    //_____________Stelle__________________ 
+    
+    @OneToMany(mappedBy = "bewerbung")
+    private Set<Stelle> stellen;
+
+    public Set<Stelle> getStellen() {
+        return stellen;
+    }
+
+    public void setStellen(Set<Stelle> stellen) {
+        this.stellen = stellen;
+    }
+   
     public Bewerbung() {
     }
 
+    public Date getZeitstempel() {
+        return zeitstempel;
+    }
+
+    public void setZeitstempel(Date zeitstempel) {
+        this.zeitstempel = zeitstempel;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.zeitstempel);
+        hash = 79 * hash + Objects.hashCode(this.status);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Bewerbung other = (Bewerbung) obj;
+        if (!Objects.equals(this.status, other.status)) {
+            return false;
+        }
+        return Objects.equals(this.zeitstempel, other.zeitstempel);
+    }
+
+    @Override
+    public String toString() {
+        return "Bewerbung{" + "zeitstempel=" + zeitstempel + ", status=" + status + '}';
+    }
 }

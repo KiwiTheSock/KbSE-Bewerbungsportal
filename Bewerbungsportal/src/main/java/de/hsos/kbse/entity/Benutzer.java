@@ -6,37 +6,27 @@
 package de.hsos.kbse.entity;
 
 import de.hsos.kbse.interfaces.AbstractEntity;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author pmarkman
  */
+
+//@Transactional(Transactional.TxType.MANDATORY) 
+//@Vetoed
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
-//@Vetoed Erklärung nötig
 @Table(name="Benutzer")
-//@NamedQueries ergänzen!
-@XmlRootElement
-@Transactional(Transactional.TxType.MANDATORY) //Erklärung nötig
 public class Benutzer extends AbstractEntity {
 
-    @OneToOne
-    private Bewerber bewerber;
-
-    @OneToMany(mappedBy = "bewerber")
-    private List<Bewerber> bewerbers;
-    
     @Column(name="name")
     @NotNull()
     @Valid // Gute Erklärung nötig
