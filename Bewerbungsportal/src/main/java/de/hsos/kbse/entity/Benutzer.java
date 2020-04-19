@@ -7,27 +7,65 @@ package de.hsos.kbse.entity;
 
 import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 
 /**
  *
  * @author pmarkman
  */
+
+//@Transactional(Transactional.TxType.MANDATORY) 
+//@Vetoed
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
 @Table(name="Benutzer")
-//@NamedQueries ergänzen!
-
 public class Benutzer extends AbstractEntity {
+
+    @Column(name="name")
+    @NotNull()
+    @Valid // Gute Erklärung nötig
+    private String name;
     
-    String name;
-    String vorname;
-    String email;
-    String telefon;
-    String straße;
-    String ort;
-    Integer plz;
+    @Column(name="vorname")
+    @NotNull()
+    @Valid
+    private String vorname;
+    
+    @Column(name="email")
+    @NotNull()
+    @Valid
+    private String email;
+    
+    @Column(name="telefon")
+    @NotNull()
+    @Valid
+    private String telefon;
+    
+    @Column(name="straße")
+    @NotNull()
+    @Valid
+    private String straße;
+    
+    @Column(name="ort")
+    @NotNull()
+    @Valid
+    private String ort;
+    
+    @Column(name="plz")
+    @NotNull()
+    @Valid
+    private Integer plz;
+    
+    /*@Embedded
+    @Valid
+    private Login login = new Login();*/
 
     public Benutzer(String name, String vorname, String email, String telefon, String straße, String ort, Integer plz) {
         this.name = name;

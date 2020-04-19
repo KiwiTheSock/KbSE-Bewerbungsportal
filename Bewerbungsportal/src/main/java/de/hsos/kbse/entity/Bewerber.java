@@ -5,10 +5,15 @@
  */
 package de.hsos.kbse.entity;
 
-import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -16,28 +21,38 @@ import javax.persistence.Table;
  * @author pmarkman
  */
 @Entity
-@Table(name="Bewerber")
+//@Vetoed Erklärung nötig
+@Table(name = "Bewerber")
 //NamedQueries ergänzen!
-
+@Transactional(Transactional.TxType.MANDATORY) // Überprüfen!
 public class Bewerber extends Benutzer {
 
-    //Benutzer bewerber;
-    
     //Bemerkung Nachschlagen: Persistierung von Datein in Java
+    @Column(name = "anlagen_pfad")
+    @NotNull
+    @Valid
     String unterlagen_pfad;
+    
+    @Column(name = "portait_pfad")
+    @NotNull
+    @Valid
     String portait_pfad;
 
+    //Ein Bewerber kann mehrere Bewerbungen haben
+    @OneToMany(mappedBy = "bewerber")
+    private Set<Bewerbung> bewerbung;
+
+    public Set<Bewerbung> getBewerbung() {
+        return bewerbung;
+    }
+
+    public void setBewerbung(Set<Bewerbung> bewerbung) {
+        this.bewerbung = bewerbung;
+    }
+    
     public Bewerber() {
-       
     }
 
-    public Bewerber(String portait_pfad, String name, String vorname, String email, String telefon, String straße, String ort, Integer plz) {
-        super(name, vorname, email, telefon, straße, ort, plz);
-        this.portait_pfad = portait_pfad;
-    }
-
-    
-    
     public String getUnterlagen_pfad() {
         return unterlagen_pfad;
     }
@@ -87,5 +102,5 @@ public class Bewerber extends Benutzer {
     public String toString() {
         return "Bewerber{" + "unterlagen_pfad=" + unterlagen_pfad + ", portait_pfad=" + portait_pfad + '}';
     }
-    
+
 }
