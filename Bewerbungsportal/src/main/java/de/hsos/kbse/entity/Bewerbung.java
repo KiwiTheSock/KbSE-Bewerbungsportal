@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
  * @author pmarkman
  */
 @Entity
-@Table(name = "bewerbung")
+//@Table(name = "bewerbung")
 //@NamedQueries ergänzen!
 public class Bewerbung extends Benutzer {
 

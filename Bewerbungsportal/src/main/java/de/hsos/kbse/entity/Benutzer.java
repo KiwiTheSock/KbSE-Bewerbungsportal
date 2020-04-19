@@ -25,7 +25,7 @@ import javax.validation.constraints.NotNull;
 //@Vetoed
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
-@Table(name="Benutzer")
+//@Table(name="Benutzer")
 public class Benutzer extends AbstractEntity {
 
     @Column(name="name")

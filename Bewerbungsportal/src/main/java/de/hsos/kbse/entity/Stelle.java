@@ -25,9 +25,9 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 //@Vetoed 
-@Table(name = "Stelle")
-//@NamedQueries ergänzen
-@Transactional(Transactional.TxType.MANDATORY) // Überprüfen!
+//@Table(name = "Stelle")
+////@NamedQueries ergänzen
+//@Transactional(Transactional.TxType.MANDATORY) // Überprüfen!
 public class Stelle extends AbstractEntity {
 
     @Column(name = "bezeichnung")

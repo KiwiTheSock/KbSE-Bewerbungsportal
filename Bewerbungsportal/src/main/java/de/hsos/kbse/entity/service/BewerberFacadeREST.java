@@ -9,6 +9,7 @@ import de.hsos.kbse.entity.Benutzer;
 import de.hsos.kbse.entity.Bewerber;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.json.bind.JsonbException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -53,12 +54,12 @@ public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
             @QueryParam("plz") Integer plz,
             @QueryParam("portait_pfad") String portait_pfad){
         try {
-            Bewerber bewerber = new Bewerber( name, vorname, email, telefon, ort, straße, plz,portait_pfad);
+            Bewerber bewerber = new Bewerber( name, vorname, email, telefon, ort, straße, plz, portait_pfad);
             em.persist(bewerber);
             return Response
                     .status(Response.Status.FOUND)
                     .build();
-        } catch (NullPointerException | IllegalArgumentException ex) {
+        } catch (NullPointerException | IllegalArgumentException |JsonbException ex) {
             return Response.status(Response.Status.CONFLICT).build();
         }
     }
