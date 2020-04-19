@@ -5,7 +5,7 @@
  */
 package de.hsos.kbse.entity.service;
 
-import de.hsos.kbse.entity.Stelle;
+import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
 import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;

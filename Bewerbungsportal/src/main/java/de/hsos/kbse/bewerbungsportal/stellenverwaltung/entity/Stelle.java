@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hsos.kbse.entity;
+package de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity;
 
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Personal;
+import de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.entity.Bewerbung;
 import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Date;
 import java.util.Objects;
@@ -12,10 +14,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 

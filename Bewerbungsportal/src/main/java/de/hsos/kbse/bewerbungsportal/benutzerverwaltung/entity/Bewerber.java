@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hsos.kbse.entity;
+package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity;
 
+import de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.entity.Bewerbung;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
