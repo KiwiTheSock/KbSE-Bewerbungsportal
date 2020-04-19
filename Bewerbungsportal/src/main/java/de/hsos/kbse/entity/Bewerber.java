@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name="Bewerber")
 //NamedQueries ergänzen!
 
-public class Bewerber extends AbstractEntity {
+public class Bewerber extends Benutzer {
 
     //Benutzer bewerber;
     
@@ -28,6 +28,12 @@ public class Bewerber extends AbstractEntity {
     String portait_pfad;
 
     public Bewerber() {
+       
+    }
+
+    public Bewerber(String portait_pfad, String name, String vorname, String email, String telefon, String straße, String ort, Integer plz) {
+        super(name, vorname, email, telefon, straße, ort, plz);
+        this.portait_pfad = portait_pfad;
     }
 
     

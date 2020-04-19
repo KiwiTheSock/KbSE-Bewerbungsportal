@@ -39,6 +39,7 @@ public class Benutzer extends AbstractEntity {
         this.plz = plz;
     }
 
+    
     public Benutzer() {
     }
 
