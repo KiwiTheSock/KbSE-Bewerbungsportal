@@ -6,7 +6,7 @@
 package de.hsos.kbse.entity;
 
 import de.hsos.kbse.interfaces.AbstractEntity;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -18,8 +18,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name="Stelle")
-@XmlRootElement
-public class Stelle extends AbstractEntity {
+
+public class Stelle extends AbstractEntity  {
     
     String bezeichnung;
     Date datum;

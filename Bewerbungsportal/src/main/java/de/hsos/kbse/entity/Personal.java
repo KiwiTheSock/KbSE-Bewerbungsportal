@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name="Personal")
-@XmlRootElement
 public class Personal extends AbstractEntity {
 
     //Benutzer personal;

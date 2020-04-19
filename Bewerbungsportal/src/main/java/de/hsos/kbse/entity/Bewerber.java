@@ -9,7 +9,7 @@ import de.hsos.kbse.interfaces.AbstractEntity;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  *
@@ -18,8 +18,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="Bewerber")
 //NamedQueries ergänzen!
-@XmlRootElement
-public class Bewerber extends AbstractEntity {
+
+public class Bewerber extends Benutzer {
 
     //Benutzer bewerber;
     
@@ -27,6 +27,17 @@ public class Bewerber extends AbstractEntity {
     String unterlagen_pfad;
     String portait_pfad;
 
+    public Bewerber() {
+       
+    }
+
+    public Bewerber(String portait_pfad, String name, String vorname, String email, String telefon, String straße, String ort, Integer plz) {
+        super(name, vorname, email, telefon, straße, ort, plz);
+        this.portait_pfad = portait_pfad;
+    }
+
+    
+    
     public String getUnterlagen_pfad() {
         return unterlagen_pfad;
     }

@@ -6,6 +6,7 @@
 package de.hsos.kbse.entity.service;
 
 import de.hsos.kbse.entity.Bewerbung;
+import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,7 +19,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -87,5 +90,23 @@ public class BewerbungFacadeREST extends AbstractFacade<Bewerbung> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
+    @POST
+    @Path("bewerbung")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response createBewerbung(
+            @QueryParam("zeitstempel") Date zeitstempel,
+            @QueryParam("status") String status) {
+        try {
+
+            Bewerbung bewerber = new Bewerbung(zeitstempel, status);
+            em.persist(bewerber);
+            return Response
+                    .status(Response.Status.FOUND)
+                    .build();
+        } catch (NullPointerException | IllegalArgumentException ex) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }
+    }
+
 }
