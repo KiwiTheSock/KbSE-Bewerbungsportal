@@ -42,6 +42,12 @@ public class Bewerber extends Benutzer {
     @OneToMany(mappedBy = "bewerber")
     private Set<Bewerbung> bewerbung;
 
+
+    public Bewerber(String portait, String name, String vorname, String email, String telefon, String ort, String straße, Integer plz) {
+        super(name,vorname,email, telefon, straße, ort, plz);
+        this.portait_pfad = portait;
+    }
+
     public Set<Bewerbung> getBewerbung() {
         return bewerbung;
     }

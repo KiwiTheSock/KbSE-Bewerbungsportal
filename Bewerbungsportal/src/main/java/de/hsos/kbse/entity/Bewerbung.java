@@ -26,8 +26,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "bewerbung")
 //@NamedQueries ergänzen!
-
-public class Bewerbung extends AbstractEntity {
+public class Bewerbung extends Benutzer {
 
     @Column(name = "zeitstempel")
     @Valid
@@ -38,17 +37,6 @@ public class Bewerbung extends AbstractEntity {
     @NotNull
     @Valid
     String status;
-
-    public Bewerbung(Date zeitstempel, String status) {
-        this.zeitstempel = zeitstempel;
-        this.status = status;
-    }
-
-    public Bewerbung() {
-    }
-
-    
-    
     
     //______________Bewerber__________________
     @ManyToOne
@@ -93,6 +81,12 @@ public class Bewerbung extends AbstractEntity {
     public Bewerbung() {
     }
 
+    
+    public Bewerbung(Date zeitstempel, String status) {
+        this.zeitstempel = zeitstempel;
+        this.status = status;
+    }
+    
     public Date getZeitstempel() {
         return zeitstempel;
     }
