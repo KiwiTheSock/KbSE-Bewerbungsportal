@@ -14,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -26,6 +27,7 @@ import javax.validation.constraints.NotNull;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
 //@Table(name="Benutzer")
+@XmlRootElement
 public class Benutzer extends AbstractEntity {
 
     @Column(name="name")

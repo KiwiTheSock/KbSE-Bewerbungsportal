@@ -6,6 +6,7 @@
 package Testpackage;
 
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /** 
  *
@@ -15,6 +16,15 @@ import java.util.List;
 
 //TODO: List in ander Collection wechseln
 public interface IRepository<T> {
-    T Get(int id);
-    List<T> GetAll();
+    public void create(T entity) ;
+    public void edit(T entity);
+
+    public void remove(T entity);
+
+    public T find(Object id) ;
+    public List<T> findAll() ;
+    public List<T> findRange(int[] range) ;
+
+    public int count() ;
+    
 }

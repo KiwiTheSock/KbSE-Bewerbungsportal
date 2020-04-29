@@ -12,8 +12,10 @@ import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -36,14 +38,39 @@ public class Bewerbung extends Benutzer {
     Date zeitstempel;
 
     @Column(name = "status")
-    @NotNull
     @Valid
     String status;
+
+        //_____________Stelle__________________ 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STELLEN_ID")
+    private Stelle stellen;
     
     //______________Bewerber__________________
-    @ManyToOne
-    @JoinColumn(name="bewerber_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BEWERBUNG_ID")
     private Bewerber bewerber;
+
+    //______________Personal__________________
+    @ManyToOne
+    @JoinColumn(name = "PERSONAL_ID")
+    private Personal personal;
+
+   public Bewerbung() {
+    }
+
+//    public Bewerbung(String status) {
+//        this.status = status;
+//    }
+//
+//    
+//
+//
+//   
+//    public Bewerbung(Date zeitstempel, String status) {
+//        this.zeitstempel = zeitstempel;
+//        this.status = status;
+//    }
 
     public Bewerber getBewerber() {
         return bewerber;
@@ -53,42 +80,24 @@ public class Bewerbung extends Benutzer {
         this.bewerber = bewerber;
     }
 
-    //______________Personal__________________
-    
-    @ManyToOne
-    @JoinColumn(name = "personal_id", nullable = false)
-    private Personal personal;
-    
     public Personal getPersonal() {
-    return personal;
+        return personal;
     }
-    
-    public void setPersonal(Personal personal) {
-    this.personal = personal;
-    }
-    
-    //_____________Stelle__________________ 
-    
-    @OneToMany(mappedBy = "bewerbung")
-    private Set<Stelle> stellen;
 
-    public Set<Stelle> getStellen() {
+    public void setPersonal(Personal personal) {
+        this.personal = personal;
+    }
+
+    public Stelle getStellen() {
         return stellen;
     }
 
-    public void setStellen(Set<Stelle> stellen) {
+    public void setStellen(Stelle stellen) {
         this.stellen = stellen;
     }
-   
-    public Bewerbung() {
-    }
 
-    
-    public Bewerbung(Date zeitstempel, String status) {
-        this.zeitstempel = zeitstempel;
-        this.status = status;
-    }
-    
+ 
+
     public Date getZeitstempel() {
         return zeitstempel;
     }

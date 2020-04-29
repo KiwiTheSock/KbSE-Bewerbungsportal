@@ -5,7 +5,11 @@
  */
 package Testpackage;
 
-import Testpackage.IBenutzerRepository;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.IBenutzerRepository;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.IBewerberRepository;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.IPersonalRepository;
+import de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.repository.IBewerbungRepository;
+import de.hsos.kbse.bewerbungsportal.stellenverwaltung.repository.IStelleRepository;
 
 /**
  *
@@ -13,8 +17,11 @@ import Testpackage.IBenutzerRepository;
  */
 public interface IUnitWork {
     //hier ale Entitys einbinden
-    IBenutzerRepository GetBenutzer();
-
+    IBenutzerRepository getBenutzer();
+    IPersonalRepository getPersonal();
+    IBewerberRepository getBewerber();
+    IBewerbungRepository getBewerbung();
+    IStelleRepository getStelle();
     /**
      *
      * @return

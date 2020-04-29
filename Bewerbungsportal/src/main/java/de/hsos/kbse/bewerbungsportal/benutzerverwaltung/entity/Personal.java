@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -26,38 +27,45 @@ public class Personal extends Benutzer {
 
     //Zusätzliche Attribute
     @Column(name = "durchwahl")
-    @NotNull
+//    @NotNull
     @Valid
     String durchwahl;
 
     @Column(name = "bueronr")
-    @NotNull
+//    @NotNull
     @Valid
     String bueroNr;
-    
+
+    @OneToMany(mappedBy = "personal", fetch = FetchType.LAZY)
+    private Set<Stelle> stelle;
+
     @OneToMany(mappedBy = "personal")
     private Set<Bewerbung> bewerbungen;
-    
+
     public Set<Bewerbung> getBewerbung() {
-    return bewerbungen;
+        return bewerbungen;
     }
+
+    public Personal() {
+    }
+    
+   public Personal( String name, String vorname, String email, String telefon, String ort, String straße, Integer plz, String durchwahl, String bueroNr) {
+        super(name,vorname,email, telefon, straße, ort, plz);
+        this.durchwahl = durchwahl;
+        this.bueroNr = bueroNr;
+    }
+    
     
     public void setBewerbung(Set<Bewerbung> bewerbung) {
-    this.bewerbungen = bewerbung;
+        this.bewerbungen = bewerbung;
     }
-    
-    @OneToMany(mappedBy = "personal")
-    private Set<Stelle> stelle;
-    
+
     public Set<Stelle> getStelle() {
-    return stelle;
+        return stelle;
     }
-    
+
     public void setStelle(Set<Stelle> stelle) {
-    this.stelle = stelle;
-    }
-    
-    public Personal() {
+        this.stelle = stelle;
     }
 
     public String getDurchwahl() {
@@ -107,7 +115,7 @@ public class Personal extends Benutzer {
 
     @Override
     public String toString() {
-        return "Personal{" + "durchwahl=" + durchwahl + ", bueroNr=" + bueroNr +'}';
+        return "Personal{" + "durchwahl=" + durchwahl + ", bueroNr=" + bueroNr + '}';
     }
 
 }

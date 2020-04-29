@@ -5,10 +5,13 @@
  */
 package de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.repository;
 
+import Testpackage.IRepository;
+import de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.entity.Bewerbung;
+
 /**
  *
- * @author PMark
+ * @author nordm
  */
-public class filler {
-    //test
+public interface IBewerbungRepository extends IRepository<Bewerbung>  {
+    
 }

@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hsos.kbse.entity.service;
+package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.controller;
 
-import de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.entity.Bewerbung;
-import java.sql.Date;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Benutzer;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Bewerber;
+import de.hsos.kbse.entity.service.AbstractFacade;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.json.bind.JsonbException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -28,27 +30,53 @@ import javax.ws.rs.core.Response;
  * @author nordm
  */
 @Stateless
-@Path("de.hsos.kbse.entity.bewerbung")
-public class BewerbungFacadeREST extends AbstractFacade<Bewerbung> {
+@Path("de.hsos.kbse.entity.bewerber")
+public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
 
     @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
-    public BewerbungFacadeREST() {
-        super(Bewerbung.class);
+    public BewerberFacadeREST() {
+        super(Bewerber.class);
     }
 
+    
+       
+        @POST
+    @Path("bewerber")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response createBewerber(
+            @QueryParam("name") String name,
+            @QueryParam("vorname") String vorname,
+            @QueryParam("email") String email,
+            @QueryParam("telefon") String telefon,
+            @QueryParam("ort") String ort,
+            @QueryParam("straße") String straße,
+            @QueryParam("plz") Integer plz,
+            @QueryParam("portait_pfad") String portait_pfad){
+        try {
+            Bewerber bewerber = new Bewerber( name, vorname, email, telefon, ort, straße, plz, portait_pfad);
+            
+            em.persist(bewerber);
+            return Response
+                    .status(Response.Status.FOUND)
+                    .build();
+        } catch (NullPointerException | IllegalArgumentException |JsonbException ex) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }
+    }
+    
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Bewerbung entity) {
+    public void create(Bewerber entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Bewerbung entity) {
+    public void edit(@PathParam("id") Long id, Bewerber entity) {
         super.edit(entity);
     }
 
@@ -61,21 +89,21 @@ public class BewerbungFacadeREST extends AbstractFacade<Bewerbung> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Bewerbung find(@PathParam("id") Long id) {
+    public Bewerber find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Bewerbung> findAll() {
+    public List<Bewerber> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Bewerbung> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Bewerber> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
@@ -90,23 +118,5 @@ public class BewerbungFacadeREST extends AbstractFacade<Bewerbung> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
-    @POST
-    @Path("bewerbung")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response createBewerbung(
-            @QueryParam("zeitstempel") Date zeitstempel,
-            @QueryParam("status") String status) {
-        try {
-
-            Bewerbung bewerber = new Bewerbung(zeitstempel, status);
-            em.persist(bewerber);
-            return Response
-                    .status(Response.Status.FOUND)
-                    .build();
-        } catch (NullPointerException | IllegalArgumentException ex) {
-            return Response.status(Response.Status.CONFLICT).build();
-        }
-    }
-
+    
 }

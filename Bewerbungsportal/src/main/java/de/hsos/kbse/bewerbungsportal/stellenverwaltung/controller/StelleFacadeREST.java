@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hsos.kbse.entity.service;
+package de.hsos.kbse.bewerbungsportal.stellenverwaltung.controller;
 
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
+import de.hsos.kbse.entity.service.AbstractFacade;
 import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -93,19 +94,20 @@ public class StelleFacadeREST extends AbstractFacade<Stelle> {
 
     
       @POST
-    @Path("stelle")
+    @Path("stelle/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createStelle(
             @QueryParam("bezeichnung") String bezeichnung,
             @QueryParam("datum") Date datum,
             @QueryParam("beschreibung") String beschreibung,
-            @QueryParam("ort") String ort) {
+            @QueryParam("ort") String ort,
+            @PathParam("id") Long id){
         try {
 
             Stelle stelle = new Stelle(bezeichnung, datum, beschreibung, ort);
             em.persist(stelle);
             return Response
-                    .status(Response.Status.FOUND)
+                    .status(Response.Status.OK)
                     .build();
         } catch (NullPointerException | IllegalArgumentException ex) {
             return Response.status(Response.Status.CONFLICT).build();

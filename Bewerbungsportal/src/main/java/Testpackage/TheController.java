@@ -14,12 +14,13 @@ import javax.persistence.PersistenceContext;
  */
 public class TheController {
     
-    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
-    private EntityManager em;
+//    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
+//    private EntityManager em;
     
     UnitWork unit;
     public TheController() {
-        unit = new UnitWork(em);
+        unit = new UnitWork();
+   
         
     }
     

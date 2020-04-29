@@ -5,10 +5,13 @@
  */
 package de.hsos.kbse.bewerbungsportal.stellenverwaltung.repository;
 
+import Testpackage.IRepository;
+import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
+
 /**
  *
- * @author PMark
+ * @author nordm
  */
-public class filler {
-    //asdaf
+public interface IStelleRepository extends IRepository<Stelle> {
+    
 }

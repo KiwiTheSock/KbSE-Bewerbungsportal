@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hsos.kbse.entity.service;
+package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.controller;
 
-import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Benutzer;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Bewerber;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Personal;
+import de.hsos.kbse.entity.service.AbstractFacade;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.json.bind.JsonbException;
@@ -29,22 +30,20 @@ import javax.ws.rs.core.Response;
  * @author nordm
  */
 @Stateless
-@Path("de.hsos.kbse.entity.bewerber")
-public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
+@Path("de.hsos.kbse.entity.personal")
+public class PersonalFacadeREST extends AbstractFacade<Personal> {
 
     @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
-    public BewerberFacadeREST() {
-        super(Bewerber.class);
+    public PersonalFacadeREST() {
+        super(Personal.class);
     }
 
-    
-       
-        @POST
-    @Path("bewerber")
+    @POST
+    @Path("personal")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response createBewerber(
+    public Response createPersonal(
             @QueryParam("name") String name,
             @QueryParam("vorname") String vorname,
             @QueryParam("email") String email,
@@ -52,29 +51,31 @@ public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
             @QueryParam("ort") String ort,
             @QueryParam("straße") String straße,
             @QueryParam("plz") Integer plz,
-            @QueryParam("portait_pfad") String portait_pfad){
+            @QueryParam("durchwahl") String durchwahl,
+            @QueryParam("bueroNr") String bueroNr){
         try {
-            Bewerber bewerber = new Bewerber( name, vorname, email, telefon, ort, straße, plz, portait_pfad);
-            em.persist(bewerber);
+            Personal personal = new Personal(name, vorname, email, telefon, ort, straße, plz, durchwahl, bueroNr);
+
+            em.persist(personal);
             return Response
                     .status(Response.Status.FOUND)
                     .build();
-        } catch (NullPointerException | IllegalArgumentException |JsonbException ex) {
+        } catch (NullPointerException | IllegalArgumentException | JsonbException ex) {
             return Response.status(Response.Status.CONFLICT).build();
         }
     }
-    
+
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Bewerber entity) {
+    public void create(Personal entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Bewerber entity) {
+    public void edit(@PathParam("id") Long id, Personal entity) {
         super.edit(entity);
     }
 
@@ -87,21 +88,21 @@ public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Bewerber find(@PathParam("id") Long id) {
+    public Personal find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Bewerber> findAll() {
+    public List<Personal> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Bewerber> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Personal> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
@@ -116,5 +117,5 @@ public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

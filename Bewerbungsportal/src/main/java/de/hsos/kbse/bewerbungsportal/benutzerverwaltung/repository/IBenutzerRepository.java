@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Testpackage;
+package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository;
 
+import Testpackage.IRepository;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Benutzer;
 import java.util.List;
+
 
 /**
  *
