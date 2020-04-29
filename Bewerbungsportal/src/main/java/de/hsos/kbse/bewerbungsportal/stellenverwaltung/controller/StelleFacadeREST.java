@@ -5,10 +5,13 @@
  */
 package de.hsos.kbse.bewerbungsportal.stellenverwaltung.controller;
 
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Personal;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.PersonalRepository;
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.repository.StelleRepository;
 
-import java.sql.Date;
+
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,6 +37,9 @@ public class StelleFacadeREST  {
 
     @Inject
     StelleRepository stellenRepo;
+        @Inject
+    PersonalRepository personalRepo;
+
 
     public StelleFacadeREST() {
     }
@@ -90,13 +96,15 @@ public class StelleFacadeREST  {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createStelle(
             @QueryParam("bezeichnung") String bezeichnung,
-            @QueryParam("datum") Date datum,
             @QueryParam("beschreibung") String beschreibung,
             @QueryParam("ort") String ort,
             @PathParam("id") Long id) {
         try {
-
-            Stelle stelle = new Stelle(bezeichnung, datum, beschreibung, ort);
+      
+            Stelle stelle = new Stelle(bezeichnung,  beschreibung, ort);
+            Personal personal = personalRepo.find(id);
+//            stelle.setPersonal(personal);
+            
             stellenRepo.create(stelle);
             return Response
                     .status(Response.Status.OK)
