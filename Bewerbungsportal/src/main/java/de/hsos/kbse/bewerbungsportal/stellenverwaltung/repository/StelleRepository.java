@@ -9,6 +9,7 @@ import Testpackage.AbstractRepository;
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -17,6 +18,7 @@ import javax.persistence.EntityManager;
 @Dependent
 public class StelleRepository extends AbstractRepository<Stelle> {
 
+     @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
     EntityManager em;
     
     public StelleRepository() {

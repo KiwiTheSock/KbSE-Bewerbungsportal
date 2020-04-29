@@ -21,6 +21,10 @@ public abstract class AbstractRepository<T> {
         this.entityClass = entityClass;
     }
 
+    /**
+     *
+     * @return
+     */
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {

@@ -10,8 +10,6 @@ import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.PersonalRepos
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.repository.StelleRepository;
 
-
-
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -33,13 +31,12 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("de.hsos.kbse.entity.stelle")
-public class StelleFacadeREST  {
+public class StelleFacadeREST {
 
     @Inject
     StelleRepository stellenRepo;
-        @Inject
+    @Inject
     PersonalRepository personalRepo;
-
 
     public StelleFacadeREST() {
     }
@@ -100,12 +97,16 @@ public class StelleFacadeREST  {
             @QueryParam("ort") String ort,
             @PathParam("id") Long id) {
         try {
-      
-            Stelle stelle = new Stelle(bezeichnung,  beschreibung, ort);
+
+            Stelle stelle = new Stelle(bezeichnung, beschreibung, ort);
             Personal personal = personalRepo.find(id);
-//            stelle.setPersonal(personal);
+            stelle.setPersonal(personal);
+            personal.getStelle().add(stelle);
             
+
+           
             stellenRepo.create(stelle);
+             personalRepo.edit(personal);
             return Response
                     .status(Response.Status.OK)
                     .build();
