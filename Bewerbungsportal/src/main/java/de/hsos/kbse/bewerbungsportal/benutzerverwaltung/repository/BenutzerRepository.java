@@ -5,9 +5,11 @@ package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Testpackage.Repository;
+import Testpackage.AbstractRepository;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Benutzer;
 import java.util.List;
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,18 +17,20 @@ import javax.persistence.PersistenceContext;
  *
  * @author nordm
  */
-public class BenutzerRepository extends Repository<Benutzer> implements IBenutzerRepository {
-    
-//    EntityManager em;
-    
-    public BenutzerRepository(EntityManager em) {
-        super(Benutzer.class,em);
+@Dependent
+public class BenutzerRepository extends AbstractRepository<Benutzer> {
+
+    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
+    private EntityManager em;
+
+    public BenutzerRepository() {
+        super(Benutzer.class);
     }
+
 
     @Override
-    public List<Benutzer> GetDiesDas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected EntityManager getEntityManager() {
+        return em;
     }
-
 
 }

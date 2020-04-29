@@ -5,17 +5,26 @@
  */
 package de.hsos.kbse.bewerbungsportal.stellenverwaltung.repository;
 
-import Testpackage.Repository;
+import Testpackage.AbstractRepository;
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
+import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 
 /**
  *
  * @author nordm
  */
-public class StelleRepository extends Repository<Stelle> implements IStelleRepository{
+@Dependent
+public class StelleRepository extends AbstractRepository<Stelle> {
 
-    public StelleRepository(EntityManager em) {
-        super(Stelle.class,em);
+    EntityManager em;
+    
+    public StelleRepository() {
+        super(Stelle.class);
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
 }

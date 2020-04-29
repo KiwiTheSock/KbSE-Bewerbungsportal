@@ -6,12 +6,12 @@
 package de.hsos.kbse.bewerbungsportal.stellenverwaltung.controller;
 
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
-import de.hsos.kbse.entity.service.AbstractFacade;
+import de.hsos.kbse.bewerbungsportal.stellenverwaltung.repository.StelleRepository;
+
 import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,70 +30,62 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("de.hsos.kbse.entity.stelle")
-public class StelleFacadeREST extends AbstractFacade<Stelle> {
+public class StelleFacadeREST  {
 
-    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
-    private EntityManager em;
+    @Inject
+    StelleRepository stellenRepo;
 
     public StelleFacadeREST() {
-        super(Stelle.class);
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Stelle entity) {
-        super.create(entity);
+        stellenRepo.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Stelle entity) {
-        super.edit(entity);
+        stellenRepo.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+        stellenRepo.remove(stellenRepo.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Stelle find(@PathParam("id") Long id) {
-        return super.find(id);
+        return stellenRepo.find(id);
     }
 
     @GET
-    @Override
+
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Stelle> findAll() {
-        return super.findAll();
+        return stellenRepo.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Stelle> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        return stellenRepo.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(super.count());
+        return String.valueOf(stellenRepo.count());
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    
-      @POST
+    @POST
     @Path("stelle/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createStelle(
@@ -101,11 +93,11 @@ public class StelleFacadeREST extends AbstractFacade<Stelle> {
             @QueryParam("datum") Date datum,
             @QueryParam("beschreibung") String beschreibung,
             @QueryParam("ort") String ort,
-            @PathParam("id") Long id){
+            @PathParam("id") Long id) {
         try {
 
             Stelle stelle = new Stelle(bezeichnung, datum, beschreibung, ort);
-            em.persist(stelle);
+            stellenRepo.create(stelle);
             return Response
                     .status(Response.Status.OK)
                     .build();

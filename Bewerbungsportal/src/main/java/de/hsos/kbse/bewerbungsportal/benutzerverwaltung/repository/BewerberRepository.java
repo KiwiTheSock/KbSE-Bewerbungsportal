@@ -5,20 +5,30 @@
  */
 package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository;
 
-import Testpackage.Repository;
+import Testpackage.AbstractRepository;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Benutzer;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Bewerber;
+import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author nordm
  */
-public class BewerberRepository extends Repository<Bewerber> implements IBewerberRepository{
+@Dependent
+public class BewerberRepository extends AbstractRepository<Bewerber> {
 
-    public BewerberRepository(EntityManager em) {
-        super(Bewerber.class,em);
+    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
+    private EntityManager em;
+
+    public BewerberRepository() {
+        super(Bewerber.class);
     }
 
-
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
 }

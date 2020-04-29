@@ -5,14 +5,11 @@
  */
 package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.controller;
 
-import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Benutzer;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Bewerber;
-import de.hsos.kbse.entity.service.AbstractFacade;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.BewerberRepository;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.json.bind.JsonbException;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -24,6 +21,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.inject.Inject;
 
 /**
  *
@@ -31,18 +29,16 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("de.hsos.kbse.entity.bewerber")
-public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
-
-    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
-    private EntityManager em;
+public class BewerberFacadeREST {
 
     public BewerberFacadeREST() {
-        super(Bewerber.class);
+
     }
 
-    
-       
-        @POST
+    @Inject
+    BewerberRepository bewerberRepo;
+
+    @POST
     @Path("bewerber")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createBewerber(
@@ -53,70 +49,65 @@ public class BewerberFacadeREST extends AbstractFacade<Bewerber> {
             @QueryParam("ort") String ort,
             @QueryParam("straße") String straße,
             @QueryParam("plz") Integer plz,
-            @QueryParam("portait_pfad") String portait_pfad){
+            @QueryParam("portait_pfad") String portait_pfad) {
         try {
-            Bewerber bewerber = new Bewerber( name, vorname, email, telefon, ort, straße, plz, portait_pfad);
-            
-            em.persist(bewerber);
+            Bewerber bewerber = new Bewerber(name, vorname, email, telefon, ort, straße, plz, portait_pfad);
+
+            bewerberRepo.create(bewerber);
             return Response
                     .status(Response.Status.FOUND)
                     .build();
-        } catch (NullPointerException | IllegalArgumentException |JsonbException ex) {
+        } catch (NullPointerException | IllegalArgumentException | JsonbException ex) {
             return Response.status(Response.Status.CONFLICT).build();
         }
     }
-    
+
     @POST
-    @Override
+
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Bewerber entity) {
-        super.create(entity);
+        bewerberRepo.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Bewerber entity) {
-        super.edit(entity);
+        bewerberRepo.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+        bewerberRepo.remove(bewerberRepo.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Bewerber find(@PathParam("id") Long id) {
-        return super.find(id);
+        return bewerberRepo.find(id);
     }
 
     @GET
-    @Override
+
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Bewerber> findAll() {
-        return super.findAll();
+        return bewerberRepo.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Bewerber> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        return bewerberRepo.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(super.count());
+        return String.valueOf(bewerberRepo.count());
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
 }

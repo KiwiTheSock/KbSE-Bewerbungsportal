@@ -5,19 +5,11 @@
  */
 package de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.controller;
 
-import Testpackage.UnitWork;
-import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Bewerber;
-import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Bewerber_;
-import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Personal;
 import de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.entity.Bewerbung;
-import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
-import de.hsos.kbse.entity.service.AbstractFacade;
-import java.sql.Date;
+import de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.repository.BewerbungRepository;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -36,69 +28,59 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("de.hsos.kbse.entity.bewerbung")
-public class BewerbungFacadeREST extends AbstractFacade<Bewerbung> {
-
-    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
-    private EntityManager em;
+public class BewerbungFacadeREST {
 
     @Inject
-    private UnitWork unit;
+    BewerbungRepository bewerbungsRepo;
 
     public BewerbungFacadeREST() {
-        super(Bewerbung.class);
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Bewerbung entity) {
-        super.create(entity);
+        bewerbungsRepo.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Bewerbung entity) {
-        super.edit(entity);
+        bewerbungsRepo.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+        bewerbungsRepo.remove(bewerbungsRepo.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Bewerbung find(@PathParam("id") Long id) {
-        return super.find(id);
+        return bewerbungsRepo.find(id);
     }
 
     @GET
-    @Override
+
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Bewerbung> findAll() {
-        return super.findAll();
+        return bewerbungsRepo.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Bewerbung> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        return bewerbungsRepo.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+        return String.valueOf(bewerbungsRepo.count());
     }
 
     @POST
@@ -116,7 +98,7 @@ public class BewerbungFacadeREST extends AbstractFacade<Bewerbung> {
 //            bewerbung.setPersonal(unit.getPersonal().find(personal_id));
 //            bewerbung.setBewerber(unit.getBewerber().find(bewerber_id));
 //            bewerbung.setStellen(unit.getStelle().find(stellen_id));
-            em.persist(bewerbung);
+            bewerbungsRepo.create(bewerbung);
             return Response
                     .status(Response.Status.OK)
                     .build();

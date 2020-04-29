@@ -5,17 +5,11 @@ package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-
-
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Benutzer;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.BenutzerRepository;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -36,66 +30,66 @@ import javax.ws.rs.core.Response;
 @Path("de.hsos.kbse.entity.benutzer")
 public class BenutzerFacadeREST {
 
-//    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
-//    private EntityManager em;em
-
-//    public BenutzerFacadeREST() {
-//        
-//    }
+    public BenutzerFacadeREST() {
+    }
 
     @Inject
     BenutzerRepository benutzerRepo;
-    
+
     @POST
 //    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Benutzer entity) {
-        super.create(entity);
+        benutzerRepo.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Benutzer entity) {
-        super.edit(entity);
+        benutzerRepo.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+        benutzerRepo.remove(benutzerRepo.find(id));
     }
 
     @GET
     @Path("{id}")
-    @Produces({ MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Benutzer find(@PathParam("id") Long id) {
-        return super.find(id);
+        return benutzerRepo.find(id);
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Benutzer> findAll() {
-        return super.findAll();
+        return benutzerRepo.findAll();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Benutzer> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        return benutzerRepo.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(super.count());
+        return String.valueOf(benutzerRepo.count());
     }
 
-    
-        @POST
+    @POST
     @Path("benutzer")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createBenutzer(
@@ -108,7 +102,8 @@ public class BenutzerFacadeREST {
             @QueryParam("plz") Integer plz) {
         try {
             Benutzer benutzer = new Benutzer(name, vorname, email, telefon, ort, straße, plz);
-            em.persist(benutzer);
+            benutzerRepo.create(benutzer);
+
             return Response
                     .status(Response.Status.FOUND)
                     .build();
@@ -116,8 +111,7 @@ public class BenutzerFacadeREST {
             return Response.status(Response.Status.CONFLICT).build();
         }
     }
-    
-    
+
 //    @Override
 //    public Response createBenutzer(String name, String vorname, String email, String telefon, String ort, String straße, Integer plz) {
 //        try {
@@ -130,13 +124,4 @@ public class BenutzerFacadeREST {
 //            return Response.status(Response.Status.CONFLICT).build();
 //        }
 //    }
-
-    public EntityManager getEm() {
-        return super.getEntityManager();
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
 }

@@ -5,18 +5,29 @@
  */
 package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository;
 
-import Testpackage.Repository;
+import Testpackage.AbstractRepository;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Personal;
+import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author nordm
  */
-public class PersonalRepository extends Repository<Personal> implements IPersonalRepository{
+@Dependent
+public class PersonalRepository extends AbstractRepository<Personal>  {
 
-    public PersonalRepository(EntityManager em) {
-        super(Personal.class,em);
+    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
+    private EntityManager em;
+
+    public PersonalRepository() {
+        super(Personal.class);
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
 }

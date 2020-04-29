@@ -7,9 +7,11 @@ package de.hsos.kbse.bewerbungsportal.benutzerverwaltung.controller;
 
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Bewerber;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Personal;
-import de.hsos.kbse.entity.service.AbstractFacade;
+import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.PersonalRepository;
+
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.json.bind.JsonbException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,14 +33,13 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("de.hsos.kbse.entity.personal")
-public class PersonalFacadeREST extends AbstractFacade<Personal> {
-
-    @PersistenceContext(unitName = "de.hsos.kbse_Bewerbungsportal_war_1.0-SNAPSHOTPU")
-    private EntityManager em;
+public class PersonalFacadeREST {
 
     public PersonalFacadeREST() {
-        super(Personal.class);
     }
+
+    @Inject
+    PersonalRepository personalRepo;
 
     @POST
     @Path("personal")
@@ -52,11 +53,11 @@ public class PersonalFacadeREST extends AbstractFacade<Personal> {
             @QueryParam("straße") String straße,
             @QueryParam("plz") Integer plz,
             @QueryParam("durchwahl") String durchwahl,
-            @QueryParam("bueroNr") String bueroNr){
+            @QueryParam("bueroNr") String bueroNr) {
         try {
             Personal personal = new Personal(name, vorname, email, telefon, ort, straße, plz, durchwahl, bueroNr);
 
-            em.persist(personal);
+            personalRepo.create(personal);
             return Response
                     .status(Response.Status.FOUND)
                     .build();
@@ -66,56 +67,51 @@ public class PersonalFacadeREST extends AbstractFacade<Personal> {
     }
 
     @POST
-    @Override
+
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Personal entity) {
-        super.create(entity);
+        personalRepo.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Personal entity) {
-        super.edit(entity);
+        personalRepo.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+        personalRepo.remove(personalRepo.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Personal find(@PathParam("id") Long id) {
-        return super.find(id);
+        return personalRepo.find(id);
     }
 
     @GET
-    @Override
+
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Personal> findAll() {
-        return super.findAll();
+        return personalRepo.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Personal> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        return personalRepo.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+        return String.valueOf(personalRepo.count());
     }
 
 }
