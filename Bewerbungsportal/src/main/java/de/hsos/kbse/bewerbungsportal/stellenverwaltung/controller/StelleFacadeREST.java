@@ -7,6 +7,7 @@ package de.hsos.kbse.bewerbungsportal.stellenverwaltung.controller;
 
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.entity.Personal;
 import de.hsos.kbse.bewerbungsportal.benutzerverwaltung.repository.PersonalRepository;
+import static de.hsos.kbse.bewerbungsportal.bewerbungsverwaltung.entity.Bewerbung_.personal;
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.entity.Stelle;
 import de.hsos.kbse.bewerbungsportal.stellenverwaltung.repository.StelleRepository;
 

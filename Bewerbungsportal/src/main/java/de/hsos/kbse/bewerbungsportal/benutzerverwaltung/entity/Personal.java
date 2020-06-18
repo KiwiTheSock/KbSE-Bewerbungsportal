@@ -39,7 +39,7 @@ public class Personal extends Benutzer {
     @OneToMany(mappedBy = "personal", fetch = FetchType.LAZY)
     private Set<Stelle> stelle;
 
-    @OneToMany(mappedBy = "personal")
+//    @OneToMany(mappedBy = "personal")
     private Set<Bewerbung> bewerbungen;
 
     public Set<Bewerbung> getBewerbung() {
